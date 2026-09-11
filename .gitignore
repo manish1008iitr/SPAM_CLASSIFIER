@@ -1,7 +1,8 @@
 # Byte-compiled / optimized / DLL files
 data 
-models 
+models
 reports
+spam_env
 
 __pycache__/
 *.py[codz]
