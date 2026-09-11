@@ -5,7 +5,8 @@ import pickle
 import json
 from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score
 import yaml
-#from dvclive import Live
+import logging
+from dvclive import Live
 
 from pathlib import Path
 script_dir = Path(__file__).parent
@@ -46,6 +47,7 @@ def evaluate_model(clf, X_test: np.ndarray, y_test: np.ndarray) -> dict:
 
 def save_metrics(metrics: dict, file_path: str) -> None:
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    print("directory created")
     with open(file_path, 'w') as file:
         json.dump(metrics, file, indent=4)
 
@@ -57,7 +59,16 @@ def main():
     y_test = test_data.iloc[:, -1].values
     metrics = evaluate_model(clf, X_test, y_test)
     print(f"Model Evaluation Metrics: {metrics}")
+    
     save_metrics(metrics, script_dir.parent / "reports/metrics.json")
+
+    #Experiment tracking using dvclive
+    with Live(save_dvc_exp = True) as live:
+        live.log_metric("accuracy", metrics["accuracy"])
+        live.log_metric("precision", metrics["precision"])
+        live.log_metric("recall", metrics["recall"])
+        live.log_metric("auc", metrics["auc"])
+        live.log_params(params)
 
 if __name__ == '__main__':
     main()

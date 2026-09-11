@@ -23,8 +23,8 @@ stages:
       nfiles: 2
     - path: params.yaml
       hash: md5
-      md5: ce207903347a7b4edbffa03e8384e2ed
-      size: 135
+      md5: af61096597247e1439472eeb5118516f
+      size: 136
     - path: src/data_preprocessing.py
       hash: md5
       md5: 5570269a3343e8ecf6c5e52038ae383d
@@ -45,8 +45,8 @@ stages:
       nfiles: 2
     - path: params.yaml
       hash: md5
-      md5: ce207903347a7b4edbffa03e8384e2ed
-      size: 135
+      md5: af61096597247e1439472eeb5118516f
+      size: 136
     - path: src/feature_engineering.py
       hash: md5
       md5: 9fa473cfa384d15df1895531aad34c8a
@@ -54,21 +54,21 @@ stages:
     outs:
     - path: data/vectorized
       hash: md5
-      md5: b4a96722755eb7daa76310f84c3ca030.dir
-      size: 1018420
+      md5: badf2a78f3f497f39e3f33c2f48e436f.dir
+      size: 1979295
       nfiles: 2
   model_building:
     cmd: python src/model_development.py
     deps:
     - path: data/vectorized
       hash: md5
-      md5: b4a96722755eb7daa76310f84c3ca030.dir
-      size: 1018420
+      md5: badf2a78f3f497f39e3f33c2f48e436f.dir
+      size: 1979295
       nfiles: 2
     - path: params.yaml
       hash: md5
-      md5: ce207903347a7b4edbffa03e8384e2ed
-      size: 135
+      md5: af61096597247e1439472eeb5118516f
+      size: 136
     - path: src/model_development.py
       hash: md5
       md5: 1f97fb043624666edd98363a3f2adced
@@ -76,30 +76,30 @@ stages:
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: 92e7253e760fed976854c62f5c6af35a
-      size: 1500494
+      md5: eaa6fe37f7965ec606b959770d4c4a20
+      size: 3053712
   model_evaluation:
     cmd: python src/model_evaluation.py
     deps:
     - path: data/vectorized
       hash: md5
-      md5: b4a96722755eb7daa76310f84c3ca030.dir
-      size: 1018420
+      md5: badf2a78f3f497f39e3f33c2f48e436f.dir
+      size: 1979295
       nfiles: 2
     - path: models/model.pkl
       hash: md5
-      md5: 92e7253e760fed976854c62f5c6af35a
-      size: 1500494
+      md5: eaa6fe37f7965ec606b959770d4c4a20
+      size: 3053712
     - path: params.yaml
       hash: md5
-      md5: ce207903347a7b4edbffa03e8384e2ed
-      size: 135
+      md5: af61096597247e1439472eeb5118516f
+      size: 136
     - path: src/model_evaluation.py
       hash: md5
-      md5: 12f1f9217845af370e60f8b34e85b48b
-      size: 1948
+      md5: 443f813ba398624b310ed5a9d3bd733e
+      size: 2341
     outs:
     - path: reports/metrics.json
       hash: md5
-      md5: a7ea2c49046a47c737f0614524f350ce
-      size: 132
+      md5: 2bc06332aef0db8dc8abdf3cd6893f76
+      size: 146
