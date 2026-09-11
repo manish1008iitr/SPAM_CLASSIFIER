@@ -11,7 +11,7 @@ nltk.download("punkt_tab")
 
 def tranform_text(text):
     ps = PorterStemmer()
-    text = text.lower()
+    #text = text.lower()
 
     #tokenization of the text 
     text = nltk.word_tokenize(text)
@@ -44,8 +44,8 @@ def main():
     train_data = train_data.loc[:,"text"].apply(tranform_text)
     test_data = test_data.loc[:,"text"].apply(tranform_text)
 
-    train_data = train_data.iloc[:,-1].apply(preprocess)
-    test_data = train_data.iloc[:,-1].apply(preprocess)
+    train_data = train_data.iloc[:,0].apply(preprocess)
+    test_data = train_data.iloc[:,0].apply(preprocess)
 
     data_path = os.path.join("./data","interim")
     os.makedirs(data_path, exist_ok = True)
