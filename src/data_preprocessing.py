@@ -11,7 +11,7 @@ nltk.download("punkt_tab")
 
 def tranform_text(text):
     ps = PorterStemmer()
-    #text = text.lower()
+    text = text.lower()
 
     #tokenization of the text 
     text = nltk.word_tokenize(text)
@@ -28,16 +28,16 @@ def tranform_text(text):
 
     return " ".join(text)
 
-def encoding(df):
+def encoding(df, target_column:str) -> pd.DataFrame:
     # THe function is to preprocess the target column by removing duplicates, and tranforming the text column 
 
     encoder = LabelEncoder()
-    df["target"] = encoder.fit_transform(df["target"])
+    df[target_column] = encoder.fit_transform(df[target_column])
     return df
 
 def main():
-    train_data = pd.read_csv(r"C:\Users\Manish kumar\OneDrive\Documentos\SPAM_CLASSIFIER\data\raw\train.csv") 
-    test_data = pd.read_csv(r"C:\Users\Manish kumar\OneDrive\Documentos\SPAM_CLASSIFIER\data\raw\test.csv")
+    train_data = pd.read_csv("../data/raw/train.csv") 
+    test_data = pd.read_csv("../data/raw/test.csv")
 
 
     # Calling the above function to tranform the text column 
@@ -48,7 +48,7 @@ def main():
     train_processed_data = encoding(train_data, "target")
     test_processed_data = encoding(test_data, "target")
 
-    data_path = os.path.join(r"C:\Users\Manish kumar\OneDrive\Documentos\SPAM_CLASSIFIER\src\data","processed")
+    data_path = os.path.join(r"../data","processed")
     os.makedirs(data_path, exist_ok = True)
 
     train_data.to_csv(os.path.join(data_path,"processes_train_data.csv"))
