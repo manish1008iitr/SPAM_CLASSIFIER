@@ -1,6 +1,5 @@
 pandas 
-sklearn 
+scikit-learn
 nltk 
-yaml 
+pyyaml 
 numpy
-pickle
