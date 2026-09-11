@@ -44,6 +44,9 @@ def main():
     train_data["text"] = train_data.loc[:,"text"].apply(tranform_text)
     test_data["text"] = test_data.loc[:,"text"].apply(tranform_text)
 
+    train_data = train_data.dropna()
+    test_data = test_data.dropna()
+
 
     train_processed_data = encoding(train_data, "target")
     test_processed_data = encoding(test_data, "target")
