@@ -7,6 +7,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_a
 import yaml
 #from dvclive import Live
 
+from pathlib import Path
+script_dir = Path(__file__).parent
 
 def load_params(params_path:str) -> dict:
     with open(params_path, 'r') as file:
@@ -48,14 +50,14 @@ def save_metrics(metrics: dict, file_path: str) -> None:
         json.dump(metrics, file, indent=4)
 
 def main():
-    params = load_params(params_path='../params.yaml')
-    clf = load_model('../models/model.pkl')
-    test_data = load_data('../data/vectorized/test_tfidf.csv')
+    params = load_params(params_path = script_dir.parent / "params.yaml")
+    clf = load_model(script_dir.parent / "models/model.pkl")
+    test_data = load_data(script_dir.parent / "data/vectorized/test_tfidf.csv")
     X_test = test_data.iloc[:, :-1].values
     y_test = test_data.iloc[:, -1].values
     metrics = evaluate_model(clf, X_test, y_test)
     print(f"Model Evaluation Metrics: {metrics}")
-    save_metrics(metrics, '../reports/metrics.json')
+    save_metrics(metrics, script_dir.parent / "reports/metrics.json")
 
 if __name__ == '__main__':
     main()

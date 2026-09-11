@@ -9,6 +9,10 @@ import nltk
 nltk.download("stopwords")
 nltk.download("punkt_tab")
 
+from pathlib import Path
+script_dir = Path(__file__).parent
+#print(script_dir)
+
 def tranform_text(text):
     ps = PorterStemmer()
     text = text.lower()
@@ -36,8 +40,8 @@ def encoding(df, target_column:str) -> pd.DataFrame:
     return df
 
 def main():
-    train_data = pd.read_csv("../data/raw/train.csv") 
-    test_data = pd.read_csv("../data/raw/test.csv")
+    train_data = pd.read_csv(script_dir.parent/"data/raw/train.csv") 
+    test_data = pd.read_csv(script_dir.parent/"data/raw/test.csv")
 
 
     # Calling the above function to tranform the text column 
@@ -51,11 +55,11 @@ def main():
     train_processed_data = encoding(train_data, "target")
     test_processed_data = encoding(test_data, "target")
 
-    data_path = os.path.join(r"../data","processed")
+    data_path = script_dir.parent / "data/processed"
     os.makedirs(data_path, exist_ok = True)
 
-    train_data.to_csv(os.path.join(data_path,"processes_train_data.csv"))
-    test_data.to_csv(os.path.join(data_path,"processes_test_data.csv"))
+    train_data.to_csv(script_dir.parent / "data/processed/processed_train_data.csv")
+    test_data.to_csv(script_dir.parent / "data/processed/processed_test_data.csv")
  
 if __name__ == "__main__":
     main()

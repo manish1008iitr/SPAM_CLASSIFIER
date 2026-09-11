@@ -5,6 +5,9 @@ import pickle
 from sklearn.ensemble import RandomForestClassifier
 import yaml
 
+from pathlib import Path
+script_dir = Path(__file__).parent
+
 def load_params(params_path:str) -> dict:
     with open(params_path, 'r') as file:
         params = yaml.safe_load(file)
@@ -26,12 +29,12 @@ def save_model(model, dir_name, file_path: str) -> None:
         pickle.dump(model, file)
 
 def main():
-    params = load_params('../params.yaml')['model_building']
-    train_data = load_data('../data/vectorized/train_tfidf.csv')
+    params = load_params(script_dir.parent / "params.yaml")['model_building']
+    train_data = load_data(script_dir.parent / "data/vectorized/train_tfidf.csv")
     X_train = train_data.iloc[:, :-1].values
     y_train = train_data.iloc[:, -1].values
     clf = train_model(X_train, y_train, params)    
-    model_save_path = '../models/model.pkl'
+    model_save_path = script_dir.parent / "models/model.pkl"
     save_model(clf, '../models', model_save_path)
 
 if __name__ == '__main__':

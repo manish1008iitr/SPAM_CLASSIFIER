@@ -2,6 +2,9 @@ import pandas as pd
 import os 
 import yaml 
 from sklearn.model_selection import train_test_split
+from pathlib import Path
+script_dir = Path(__file__).parent
+
 
 def load_params(params_path:str) -> dict:
     with open(params_path, 'r') as file:
@@ -27,16 +30,16 @@ def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path:str) 
     test_data.to_csv(os.path.join(raw_data_path,"test.csv"))
 
 def main():
-    params = load_params(r"../params.yaml")
+    params = load_params(script_dir.parent / "params.yaml")
     test_size = params["data_ingestion"]["test_size"]
-    data = data_loader("../experiments/spam.csv") 
+    data = data_loader(script_dir.parent / "experiments/spam.csv")
     processed_data = data_processor(data)
 
     train_data, test_data = train_test_split(
         processed_data, test_size = test_size, random_state = 42
     )
 
-    save_data(train_data, test_data, data_path=r"../data")
+    save_data(train_data, test_data, data_path= script_dir.parent/ "data")
 
 if __name__ == "__main__":
     main()

@@ -4,6 +4,9 @@ import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 import yaml
 
+from pathlib import Path
+script_dir = Path(__file__).parent
+
 def load_params(params_path:str) -> dict:
     with open(params_path, 'r') as file:
         params = yaml.safe_load(file)
@@ -39,12 +42,11 @@ def save_data(df: pd.DataFrame, file_path: str) -> None:
     df.to_csv(file_path, index=False)
 
 def main():
-    params = load_params(params_path='../params.yaml')
+    params = load_params(params_path = script_dir.parent/"params.yaml")
     max_features = params['feature_engineering']['max_features']
-    
 
-    train_data = load_data('../data/processed/processes_train_data.csv')
-    test_data = load_data('../data/processed/processes_test_data.csv')
+    train_data = load_data(script_dir.parent / "data/processed/processed_train_data.csv")
+    test_data = load_data(script_dir.parent / "data/processed/processed_test_data.csv")
 
     # Vectorize the data
     vectorised_data = apply_tfidf(train_data, test_data, max_features)
@@ -53,8 +55,8 @@ def main():
     test_vectorised_data = vectorised_data[1]
     #test_vectorised_data = apply_tfidf(test_data, test_data, max_features)
 
-    save_data(train_vectorised_data, os.path.join("../data", "vectorized", "train_tfidf.csv"))
-    save_data(test_vectorised_data, os.path.join("../data", "vectorized", "test_tfidf.csv"))
+    save_data(train_vectorised_data, script_dir.parent / "data/vectorized/train_tfidf.csv")
+    save_data(test_vectorised_data, script_dir.parent / "data/vectorized/test_tfidf.csv")
 
 if __name__ == '__main__':
     main()
