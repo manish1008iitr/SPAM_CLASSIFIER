@@ -1,3 +1,6 @@
 pandas 
 sklearn 
 nltk 
+yaml 
+numpy
+pickle

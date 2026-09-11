@@ -13,15 +13,15 @@ def data_loader(path:str) -> pd.DataFrame:
     return df 
 
 def data_processor(df:pd.DataFrame) -> pd.DataFrame:
-    df.drop(columns = ['Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4'], inplace = True)
     df.rename(columns = {
         'v1': 'target', 
         'v2': 'text'
         }, inplace = True)
+    df = df[["target","text"]]
     return df
 
 def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path:str) -> None:
-    raw_data_path = os.path.join(data_path,"_raw")
+    raw_data_path = os.path.join(data_path,"raw")
     os.makedirs(raw_data_path, exist_ok=True)
     train_data.to_csv(os.path.join(raw_data_path,"train.csv"))
     test_data.to_csv(os.path.join(raw_data_path,"test.csv"))
@@ -36,7 +36,7 @@ def main():
         processed_data, test_size = test_size, random_state = 42
     )
 
-    save_data(train_data, test_data, data_path="./data")
+    save_data(train_data, test_data, data_path=r"C:\Users\Manish kumar\OneDrive\Documentos\SPAM_CLASSIFIER\data")
 
 if __name__ == "__main__":
     main()
