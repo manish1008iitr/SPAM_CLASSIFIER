@@ -32,7 +32,7 @@ def encoding(df):
     # THe function is to preprocess the target column by removing duplicates, and tranforming the text column 
 
     encoder = LabelEncoder()
-    df["target"] = encoder.fit_tranform(df["target"])
+    df["target"] = encoder.fit_transform(df["target"])
     return df
 
 def main():

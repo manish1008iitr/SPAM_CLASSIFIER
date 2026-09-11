@@ -27,16 +27,16 @@ def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path:str) 
     test_data.to_csv(os.path.join(raw_data_path,"test.csv"))
 
 def main():
-    params = load_params(r"C:\Users\Manish kumar\OneDrive\Documentos\SPAM_CLASSIFIER\params.yaml")
+    params = load_params(r"../params.yaml")
     test_size = params["data_ingestion"]["test_size"]
-    data = data_loader(r"C:\Users\Manish kumar\OneDrive\Documentos\SPAM_CLASSIFIER\experiments\spam.csv") 
+    data = data_loader("../experiments/spam.csv") 
     processed_data = data_processor(data)
 
     train_data, test_data = train_test_split(
         processed_data, test_size = test_size, random_state = 42
     )
 
-    save_data(train_data, test_data, data_path=r"C:\Users\Manish kumar\OneDrive\Documentos\SPAM_CLASSIFIER\data")
+    save_data(train_data, test_data, data_path=r"../data")
 
 if __name__ == "__main__":
     main()
