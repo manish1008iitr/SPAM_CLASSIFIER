@@ -10,23 +10,30 @@ def load_params(params_path:str) -> dict:
         params = yaml.safe_load(file)
     return params
 
+def load_data(data_path:str) -> pd.DataFrame:
+    df = pd.read_csv(data_path)
+    df = df.dropna()
+    return df
 
 def train_model(X_train: np.ndarray, y_train: np.ndarray, params: dict):
     clf = RandomForestClassifier(n_estimators=params['n_estimators'], random_state=params['random_state'])
     clf.fit(X_train, y_train)
     return clf
 
-def save_model(model, file_path: str) -> None:
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+def save_model(model, dir_name, file_path: str) -> None:
+    os.makedirs(os.path.dirname(dir_name), exist_ok=True)
     with open(file_path, 'wb') as file:
         pickle.dump(model, file)
 
 def main():
-    params = load_params('params.yaml')['model_building']
-    train_data = load_data('./data/processed/train_tfidf.csv')
+    params = load_params('../params.yaml')['model_building']
+    train_data = load_data('../data/vectorized/train_tfidf.csv')
     X_train = train_data.iloc[:, :-1].values
     y_train = train_data.iloc[:, -1].values
     clf = train_model(X_train, y_train, params)    
-    model_save_path = 'models/model.pkl'
-    save_model(clf, model_save_path)
+    model_save_path = '../models/model.pkl'
+    save_model(clf, '../models', model_save_path)
+
+if __name__ == '__main__':
+    main()
 
